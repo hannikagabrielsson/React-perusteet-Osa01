@@ -4,19 +4,36 @@ import { useState } from 'react'
 
 const Statistics = (props) => {
   const all = props.good + props.neutral + props.bad;
+  const average = (props.good + props.neutral * 0 + props.bad * -1)/all;
+  const averageRounded = Math.round(average * 10) / 10;
+  const positive = props.good / all * 100;
+  const positiveRounded = Math.round(positive * 10) / 10;
 
   if (all > 0){
-
  
   return (
-    <div>
-      <p>good {props.good}</p>
-      <p>neutral {props.neutral}</p>
-      <p>bad {props.bad}</p>
-      <p>all {all}</p>
-      <p>average {(props.good + props.neutral * 0 + props.bad * -1)/all}</p>
-      <p>positive {props.good / all * 100}</p>
-    </div>
+    <table>
+      <tbody>
+      <tr>
+      <td>good</td><td>{props.good}</td>
+      </tr>
+      <tr>
+      <td>neutral</td><td>{props.neutral}</td>
+      </tr>
+      <tr>
+      <td>bad</td><td>{props.bad}</td>
+      </tr>
+      <tr>
+      <td>all</td><td>{all}</td>
+      </tr>
+      <tr>
+      <td>average</td><td>{averageRounded}</td>
+      </tr>
+      <tr>
+      <td>positive</td><td>{positiveRounded} %</td>
+      </tr>
+      </tbody>
+    </table>
   )
   }
   else {
@@ -33,9 +50,7 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
-  // const all = [good + neutral + bad];
-  // const average = [(good + neutral * 0 + bad * -1)/all];
-  // const positive = [good / all * 100];
+
 
   return (
     <div>
@@ -46,12 +61,6 @@ const App = () => {
 
       <h1>statistics</h1>
       <Statistics good={good} neutral={neutral} bad={bad}/>
-      {/*<p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {all}</p>
-      <p>average {average}</p>
-      <p>positive {positive}</p> */}
     </div>
   )
 }
