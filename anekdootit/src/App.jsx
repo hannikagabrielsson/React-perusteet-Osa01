@@ -19,9 +19,11 @@ import { useState } from 'react'
   const App = () => {
 
   const [selected, setSelected] = useState(0)
-
   const [votesNow, setVotesNow] = useState(0)
+  const [mostPoints, setMostPoints] = useState(0)
+  const [chosen, setChosen] = useState(0)
   
+  console.log("Tämä on mostPoints " + mostPoints)
 
   const randomNumber = (max) => {
     return Math.floor(Math.random() * max);
@@ -44,23 +46,54 @@ import { useState } from 'react'
     points = [...copy]
     console.log(points[selected])
     setVotesNow(points[selected])
+
+    console.log("these are the points " + points)
+    console.log(votesNow);
+    let updatePoints = points[selected]++
+    points[selected] = updatePoints
+    console.log("TÄMÄ " + points[selected])
+    
   }
+  // jos 1 ääni, points[selected] on 1.
+// mostPoints on 0.
+
+  for (let i = 0; i < anecdotes.length; i++)
+  {
   
+    console.log("62 tämä on mostPoints " + mostPoints)
+    console.log("63 tämä on for points selected " + points[selected])
+    // points selected on 1
 
+    if (points[selected] > mostPoints) 
+    // points[selected] on suurempi (1) kuin mostPoints (0)
+    {
+      console.log("menee tänne")
+      setMostPoints(points[selected])
+      // mostPoints on 1.
+      console.log("Tämä on mostPoints " + mostPoints)
+      console.log(mostPoints)
+      setChosen(selected)
+      console.log("tämä on chosen " + chosen)
+      
+    }
 
+  }
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       {anecdotes[selected]}
       <br />
       <p>has {votesNow} votes</p>
       <button onClick={handleVotes}>vote</button>
       <button onClick={handleAnecdotes}>next anecdote</button>
+      <br />
+      <h1>Anecdote with most votes</h1>
+      {anecdotes[chosen]}
+
     </div>
   )
 
-}
-
-
+  }
   
 
 export default App
