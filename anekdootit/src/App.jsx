@@ -1,14 +1,6 @@
 import { useState } from 'react'
 
-// const Button = (props) => (
-//   <button onClick={props.handleClick}>
-//     {props.text}
-//   </button>
-// )
 
-
-
-const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
     'Adding manpower to a late software project makes it later!',
@@ -19,41 +11,50 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when dianosing patients.',
     'The only way to go fast, is to go well.'
   ]
-   
-  const [selected, setSelected] = useState(0)
-  // const [clicks, setClicks] = useState({
-  //   vote: 0
-  // })
+  
+  let points = new Uint8Array(anecdotes.length);
 
-  const randomNumber = () => {
-    return Math.floor(Math.random() * 7);
+  console.log(points);
+
+  const App = () => {
+
+  const [selected, setSelected] = useState(0)
+
+  const [votesNow, setVotesNow] = useState(0)
+  
+
+  const randomNumber = (max) => {
+    return Math.floor(Math.random() * max);
   }
 
- 
-  const handleClick = () => {
-    setSelected(randomNumber());
+  const handleAnecdotes = () => {
+    // setSelected(randomNumber());
+    const newNumber = randomNumber(anecdotes.length)
+    setSelected(newNumber)
+    setVotesNow(points[newNumber])
   };
 
-  // const handleVoteClicks = () => {
-  //   const newClicks = {
-  //     vote: clicks.vote + 1
-  //   }
-  //   console.log(newClicks);
-  //   setClicks(newClicks);
-  //   console.log({clicks});
-
-  //   return newClicks;
-  // }
+  const handleVotes = () => {
+    let copy = [...points]
+    console.log(selected)
+    console.log(copy)
+    console.log(points)
+    copy[selected]++
+    points = null
+    points = [...copy]
+    console.log(points[selected])
+    setVotesNow(points[selected])
+  }
   
+
+
   return (
     <div>
       {anecdotes[selected]}
       <br />
-      {/* <p>has {clicks.vote} votes</p>
-      <br/>
-      <button onClick={handleVoteClicks}>vote</button>
-      <br /> */}
-      <button onClick={handleClick}>next anecdote</button>
+      <p>has {votesNow} votes</p>
+      <button onClick={handleVotes}>vote</button>
+      <button onClick={handleAnecdotes}>next anecdote</button>
     </div>
   )
 
